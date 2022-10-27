@@ -1,0 +1,6 @@
+.App {
+  text-align: center;
+  background: url("./assets/img/bg.jpg") no-repeat center center / cover;
+  /* filter: blur(1px); */
+  height: 100vh;
+}

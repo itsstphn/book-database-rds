@@ -1,0 +1,16 @@
+.AddBook {
+  margin: 3rem;
+}
+
+.AddBook form {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  margin: 0 auto;
+  gap: 1rem;
+}
+
+.AddBook form .input-container {
+  width: 300px;
+  margin: 0 auto;
+}
