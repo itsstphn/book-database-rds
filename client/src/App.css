@@ -1,0 +1,5 @@
+.App {
+  text-align: center;
+  background: url("./assets/img/bg.jpg") no-repeat center top / cover;
+  height: 100vh;
+}

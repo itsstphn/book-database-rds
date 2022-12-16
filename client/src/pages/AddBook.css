@@ -1,0 +1,23 @@
+.AddBook {
+  padding: 1rem;
+}
+
+.AddBook form {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  margin: 0 auto;
+  gap: 1rem;
+  padding: 1rem 0;
+  overflow: auto;
+}
+
+.AddBook form .input-container {
+  width: 300px;
+  margin: 0 auto;
+}
+
+.AddBook form .input-container.ctrl {
+  display: flex;
+  gap: 1rem;
+}
