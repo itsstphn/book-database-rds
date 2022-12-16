@@ -1,55 +1,72 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Home.css";
-import { TextField, Typography } from "@mui/material";
+
+import DataTable from "./../components/DataTable";
+import Search from "./../components/Search";
 import styled from "@emotion/styled";
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
+import { TextField } from "@mui/material";
+import rdsLogo from "../assets/img/Picture10.png";
+import bryanLogo from "../assets/img/CF new logo.png";
+import axios from "axios";
 
 const Home = () => {
-  const navigate = useNavigate();
+  const [books, setBooks] = useState([]);
+  // console.log(searchTerm);
+  const [rows, setRows] = useState([]);
 
-  const StyledTextField = styled(TextField)(() => ({
-    width: 260,
-  }));
+  // useEffect(() => {
+  //   const itemRows = [];
+  //   books.forEach((item) =>
+  //     itemRows.push({
+  //       bookTitle: item.book_title,
+  //       bookAuthor: item.book_author,
+  //       publishYear: item.publish_year,
+  //       id: item.ctrl_number,
+  //     })
+  //   );
+  //   setRows(itemRows);
+  // }, [books]);
 
-  const StyledButton = styled(Button)(() => ({
-    width: 260,
-  }));
+  useEffect(() => {
+    const fetchAllBooks = async () => {
+      try {
+        const res = await axios.get("http://localhost:8800/");
+        console.log("fetched!!!");
+        setBooks(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAllBooks();
+  }, []);
+
+  const handleSearchClick = async (searchTerm) => {
+    console.log("tosearch: ", searchTerm);
+    try {
+      const res = await axios.get("http://localhost:8800/search/" + searchTerm);
+      console.log(res);
+      setBooks(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // console.log(searchTerm);
+
   return (
     <div className="Home">
-      <Card>
-        <CardContent>
-          <form className="search-book">
-            <label>
-              <Typography variant="h5" component="h1">
-                Search for Books
-              </Typography>
-              <div className="input-container">
-                <StyledTextField></StyledTextField>
-              </div>
+      {/* <div className="credits">
+        <img src={rdsLogo} alt="" />
+        <img src={bryanLogo} height="150px" alt="" />
+      </div> */}
+      <div className="search">
+        <Search handleSearchClick={handleSearchClick}></Search>
+      </div>
 
-              <StyledButton
-                sx={{ margin: 2, backgroundColor: "green" }}
-                variant="contained"
-              >
-                Search
-              </StyledButton>
-            </label>
-          </form>
-
-          <StyledButton
-            sx={{ backgroundColor: "green" }}
-            onClick={() => navigate("/add-book")}
-            variant="contained"
-          >
-            Add new Book
-          </StyledButton>
-        </CardContent>
-      </Card>
-
-      <main className="book-list"></main>
+      <main className="book-list">
+        <DataTable books={books}></DataTable>
+      </main>
     </div>
   );
 };
